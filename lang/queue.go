@@ -4,22 +4,22 @@ package lang
 
 import "sync"
 
-type QueueNode struct {
+type queuenode struct {
 	data interface{}
-	next *QueueNode
+	next *queuenode
 }
 
 
 type Queue struct {
-	head *QueueNode
-	tail *QueueNode
+	head *queuenode
+	tail *queuenode
 	count int
 	lock *sync.Mutex
 }
 
 func NewQueue() *Queue {
- 	q := &Queue{}
-  q.lock = &sync.Mutex{}
+	q := &Queue{}
+	q.lock = &sync.Mutex{}
 	return q
 }
 
@@ -29,7 +29,7 @@ func (q *Queue) Count() int {
 
 func (q *Queue) Push(item interface{}) {
 	q.lock.Lock()
-	n := &QueueNode { data: item }
+	n := &queuenode { data: item }
 	
 	if q.tail == nil {
 		q.tail = n

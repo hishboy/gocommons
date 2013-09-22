@@ -3,21 +3,21 @@ package lang
 
 import "sync"
 
-type StackNode struct {
+type stacknode struct {
 	data interface{}
-	next *StackNode
+	next *stacknode
 }
 
 
 type Stack struct {
-	head *StackNode
+	head *stacknode
 	count int
 	lock *sync.Mutex
 }
 
 func NewStack() *Stack {
- 	s := &Stack{}
-  s.lock = &sync.Mutex{}
+	s := &Stack{}
+	s.lock = &sync.Mutex{}
 	return s
 }
 
@@ -27,7 +27,7 @@ func (s *Stack) Count() int {
 
 func (s *Stack) Push(item interface{}) {
 	s.lock.Lock()
-	n := &StackNode { data: item }
+	n := &stacknode { data: item }
 	
 	if s.head == nil {
 		s.head = n
@@ -43,7 +43,7 @@ func (s *Stack) Push(item interface{}) {
 func (s *Stack) Pop() interface{} {
 	s.lock.Lock()
 	
-	var n *StackNode
+	var n *stacknode
 	if s.head != nil {
 		n = s.head
 		s.head = n.next
