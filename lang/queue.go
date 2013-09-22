@@ -23,6 +23,10 @@ func NewQueue() *Queue {
 	return q
 }
 
+func (q *Queue) Count() int {
+	return q.count
+}
+
 func (q *Queue) Push(item interface{}) {
 	q.lock.Lock()
 	n := &QueueNode { data: item }
@@ -34,6 +38,7 @@ func (q *Queue) Push(item interface{}) {
 		q.tail.next = n
 		q.tail = n
 	}
+	q.count++
 	
 	q.lock.Unlock()
 }
@@ -52,6 +57,7 @@ func (q *Queue) Poll() interface{} {
 	if q.head == nil {
 		q.tail = nil
 	}
+	q.count--
 	
 	q.lock.Unlock()
 	return n.data

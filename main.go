@@ -1,7 +1,7 @@
 package main
 
 import "fmt"
-import "github.com/hishboy/srcommons/lang"
+import "github.com/hishboy/gocommons/lang"
 
 func main() { 
 	queue := lang.NewQueue()
@@ -11,8 +11,11 @@ func main() {
 	queue.Push(8)
 	queue.Push(6)
 	queue.Push("World")
+	fmt.Println("Total items before poll: ", queue.Count())
 	fmt.Println(queue.Poll(), queue.Poll(), queue.Poll(), queue.Poll(), queue.Poll(), queue.Poll(), queue.Poll())
+	fmt.Println("Total items after poll: ", queue.Count())
 	
+	fmt.Println("\n")
 	
 	stack := lang.NewStack()
 	stack.Push("World")
@@ -21,5 +24,7 @@ func main() {
 	stack.Push(8)
 	stack.Push(6)
 	stack.Push("Hello")
+	fmt.Println("Total items before pop: ", stack.Count())
 	fmt.Println(stack.Pop(), stack.Pop(), stack.Pop(), stack.Pop(), stack.Pop(), stack.Pop(), stack.Pop())
+	fmt.Println("Total items after pop: ", stack.Count())
 }

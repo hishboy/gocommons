@@ -16,38 +16,46 @@ type Stack struct {
 }
 
 func NewStack() *Stack {
- 	q := &Stack{}
-  q.lock = &sync.Mutex{}
-	return q
+ 	s := &Stack{}
+  s.lock = &sync.Mutex{}
+	return s
 }
 
-func (q *Stack) Push(item interface{}) {
-	q.lock.Lock()
+func (s *Stack) Count() int {
+	return s.count
+}
+
+func (s *Stack) Push(item interface{}) {
+	s.lock.Lock()
 	n := &StackNode { data: item }
 	
-	if q.head == nil {
-		q.head = n
+	if s.head == nil {
+		s.head = n
 	} else {
-		n.next = q.head
-		q.head = n
+		n.next = s.head
+		s.head = n
 	}
 	
-	q.lock.Unlock()
+	s.count++
+	s.lock.Unlock()
 }
  
-func (q *Stack) Pop() interface{} {
-	q.lock.Lock()
+func (s *Stack) Pop() interface{} {
+	s.lock.Lock()
 	
 	var n *StackNode
-	if q.head != nil {
-		n = q.head
-		q.head = n.next
+	if s.head != nil {
+		n = s.head
+		s.head = n.next
+		s.count--
 	}
 	
-	q.lock.Unlock()
+	s.lock.Unlock()
+	
 	if n == nil {
 		return nil
 	}
+	
 	return n.data
 	
 }
