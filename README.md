@@ -1,4 +1,4 @@
 gocommons
 =========
 
-Go lang common data structures, utils, etc
+Common Go lang data structures, utilities, etc
