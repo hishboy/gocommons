@@ -1,6 +1,5 @@
 package lang
 
-
 import "sync"
 
 type stacknode struct {
@@ -22,11 +21,16 @@ func NewStack() *Stack {
 }
 
 func (s *Stack) Count() int {
+	s.lock.Lock()
+	defer s.lock.Unlock()
+	
 	return s.count
 }
 
 func (s *Stack) Push(item interface{}) {
 	s.lock.Lock()
+	defer s.lock.Unlock()
+	
 	n := &stacknode { data: item }
 	
 	if s.head == nil {
@@ -37,11 +41,11 @@ func (s *Stack) Push(item interface{}) {
 	}
 	
 	s.count++
-	s.lock.Unlock()
 }
  
 func (s *Stack) Pop() interface{} {
 	s.lock.Lock()
+	defer s.lock.Unlock()
 	
 	var n *stacknode
 	if s.head != nil {
@@ -49,8 +53,6 @@ func (s *Stack) Pop() interface{} {
 		s.head = n.next
 		s.count--
 	}
-	
-	s.lock.Unlock()
 	
 	if n == nil {
 		return nil

@@ -24,11 +24,15 @@ func NewQueue() *Queue {
 }
 
 func (q *Queue) Count() int {
+	q.lock.Lock()
+	defer q.lock.Unlock()
 	return q.count
 }
 
 func (q *Queue) Push(item interface{}) {
 	q.lock.Lock()
+	defer q.lock.Unlock()
+	
 	n := &queuenode { data: item }
 	
 	if q.tail == nil {
@@ -39,15 +43,13 @@ func (q *Queue) Push(item interface{}) {
 		q.tail = n
 	}
 	q.count++
-	
-	q.lock.Unlock()
 }
  
 func (q *Queue) Poll() interface{} {
 	q.lock.Lock()
+	defer q.lock.Unlock()
 	
 	if q.head == nil {
-		q.lock.Unlock()
 		return nil
 	}
 	
@@ -59,7 +61,6 @@ func (q *Queue) Poll() interface{} {
 	}
 	q.count--
 	
-	q.lock.Unlock()
 	return n.data
 	
 }
