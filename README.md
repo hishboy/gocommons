@@ -5,7 +5,7 @@ Common Go lang data structures, utilities, etc
 
 data structures
 ===============
-# ArrayList
-# HashSet
-# Queue
-# Stack
+1. ArrayList
+2. HashSet
+3. Queue
+4. Stack
