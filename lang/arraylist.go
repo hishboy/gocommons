@@ -28,7 +28,7 @@ func (self *ArrayList) Count() int {
 }
 
 func (self *ArrayList) IsEmpty() bool {
-	return self.count == 0
+	return self.Count() == 0
 }
 
 func (self *ArrayList) Add(objects ...interface{}) {

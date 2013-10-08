@@ -64,4 +64,9 @@ func main() {
 	fmt.Println("array.First/Last:", array.First(), array.Last())
 	fmt.Println("array.ToSlice:", array.ToSlice())
 	
+	
+	set := lang.NewHashSet()
+	set.Add("hello", "world", "hello")
+	fmt.Println("total items in set:", set.Count(), set)
+	
 }
