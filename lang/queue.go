@@ -22,7 +22,7 @@ func NewQueue() *Queue {
 	return q
 }
 
-func (q *Queue) Count() int {
+func (q *Queue) Len() int {
 	q.lock.Lock()
 	defer q.lock.Unlock()
 	return q.count

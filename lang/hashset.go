@@ -19,7 +19,7 @@ func NewHashSet() *HashSet {
 	return instance
 }
 
-func (self *HashSet) Count() int {
+func (self *HashSet) Len() int {
 	self.lock.Lock()
 	defer self.lock.Unlock()
 	
@@ -39,7 +39,7 @@ func (self *HashSet) ToSlice() []interface{} {
 }
 
 func (self *HashSet) IsEmpty() bool {
-	return self.Count() == 0
+	return self.Len() == 0
 }
 
 func (self *HashSet) Add(objects ...interface{}) {

@@ -20,7 +20,7 @@ func NewStack() *Stack {
 	return s
 }
 
-func (s *Stack) Count() int {
+func (s *Stack) Len() int {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 	

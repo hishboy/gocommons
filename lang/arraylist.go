@@ -20,7 +20,7 @@ func NewArrayList() *ArrayList {
 	return instance
 }
 
-func (self *ArrayList) Count() int {
+func (self *ArrayList) Len() int {
 	self.lock.Lock()
 	defer self.lock.Unlock()
 	
@@ -28,7 +28,7 @@ func (self *ArrayList) Count() int {
 }
 
 func (self *ArrayList) IsEmpty() bool {
-	return self.Count() == 0
+	return self.Len() == 0
 }
 
 func (self *ArrayList) Add(objects ...interface{}) {
@@ -146,7 +146,7 @@ func (self *ArrayList) AddFromArrayList(arrayList *ArrayList) {
 		return;
 	}
 	
-	for i := 0; i < arrayList.Count(); i++ {
+	for i := 0; i < arrayList.Len(); i++ {
 		self.add(arrayList.Get(i))
 	}
 }
