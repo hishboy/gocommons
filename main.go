@@ -68,5 +68,7 @@ func main() {
 	set := lang.NewHashSet()
 	set.Add("hello", "world", "hello")
 	fmt.Println("total items in set:", set.Count(), set)
+	setToSlice := set.ToSlice()
+	fmt.Println("set.ToSlice:", setToSlice, len(setToSlice))
 	
 }

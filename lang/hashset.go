@@ -26,6 +26,18 @@ func (self *HashSet) Count() int {
 	return len(self.items)
 }
 
+func (self *HashSet) ToSlice() []interface{} {
+	self.lock.Lock()
+	defer self.lock.Unlock()
+	
+	var result []interface{}
+	for k, _ := range self.items {
+		result = append(result, k)
+	}
+	
+	return result
+}
+
 func (self *HashSet) IsEmpty() bool {
 	return self.Count() == 0
 }
