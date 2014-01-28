@@ -89,5 +89,16 @@ func (q *Queue) Poll() interface{} {
 	q.count--
 	
 	return n.data
+}
+
+func (q *Queue) Peek() interface{} {
+	q.lock.Lock()
+	defer q.lock.Unlock()
 	
+	n := q.head
+	if n == nil || n.data == nil {
+		return nil
+	}
+	
+	return n.data
 }

@@ -94,14 +94,10 @@ func (s *Stack) Peek() interface{} {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 
-	var n *stacknode
-	if s.head != nil {
-		n = s.head
-	}
-
-	if n == nil {
+	n := s.head
+	if n == nil || n.data == nil {
 		return nil
 	}
-
+	
 	return n.data
 }

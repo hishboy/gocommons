@@ -32,6 +32,7 @@ import "fmt"
 import "github.com/hishboy/gocommons/lang"
 
 func main() { 
+	fmt.Println("*** Queue ***")
 	queue := lang.NewQueue()
 	queue.Push("Hello")
 	queue.Push(4)
@@ -40,11 +41,13 @@ func main() {
 	queue.Push(6)
 	queue.Push("World")
 	fmt.Println("Total items before poll: ", queue.Len())
+	fmt.Println("peek before poll:", queue.Peek())
 	fmt.Println(queue.Poll(), queue.Poll(), queue.Poll(), queue.Poll(), queue.Poll(), queue.Poll(), queue.Poll())
 	fmt.Println("Total items after poll: ", queue.Len())
+	fmt.Println("peek: ", queue.Peek())
 	
 	fmt.Println("\n")
-	
+	fmt.Println("*** Stack ***")
 	stack := lang.NewStack()
 	stack.Push("World")
 	stack.Push(4)
@@ -53,10 +56,13 @@ func main() {
 	stack.Push(6)
 	stack.Push("Hello")
 	fmt.Println("Total items before pop: ", stack.Len())
+	fmt.Println("peek before popping:", stack.Peek())
 	fmt.Println(stack.Pop(), stack.Pop(), stack.Pop(), stack.Pop(), stack.Pop(), stack.Pop(), stack.Pop())
 	fmt.Println("Total items after pop: ", stack.Len())
+	fmt.Println("peek: ", stack.Peek())
 	
-	
+	fmt.Println("\n")
+	fmt.Println("*** ArrayList ***")
 	array := lang.NewArrayList()
 	array.Add("hello")
 	array.Add("world")
@@ -92,7 +98,8 @@ func main() {
 	fmt.Println("array.First/Last:", array.First(), array.Last())
 	fmt.Println("array.ToSlice:", array.ToSlice())
 	
-	
+	fmt.Println("\n")
+	fmt.Println("*** HashSet ***")	
 	set := lang.NewHashSet()
 	set.Add("hello", "world", "hello")
 	fmt.Println("total items in set:", set.Len(), set)
