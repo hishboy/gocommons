@@ -113,7 +113,7 @@ func main() {
 	fmt.Println("\n")
 	fmt.Println("*** KMeansSimpleCluster ***")
 	kMeansCluster := ml.NewKMeansSimpleCluster(2)
-	kMeansCluster.AddPointAsSlice([]float64{2})
+	kMeansCluster.AddPointAsSlice([]float64{42, 4})
 	kMeansCluster.AddPointAsSlice([]float64{1, 1})
 	kMeansCluster.AddPointAsSlice([]float64{2, 2})
 	kMeansCluster.AddPointAsSlice([]float64{20, 20})
