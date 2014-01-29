@@ -31,6 +31,8 @@ package lang
 import "sync"
 import "bytes"
 import "fmt"
+import "math/rand"
+import "time"
 
 type ArrayList struct {
 	count int
@@ -45,6 +47,8 @@ func NewArrayList() *ArrayList {
 	instance.items = make([]interface{}, 10)
 	instance.count = 0
 	
+	rand.Seed( time.Now().UTC().UnixNano())
+
 	return instance
 }
 
@@ -101,6 +105,17 @@ func (self *ArrayList) Get(index int) interface{} {
 	self.lock.Lock()
 	defer self.lock.Unlock()
 	
+	return self.items[index]
+}
+
+func (self *ArrayList) Sample() interface{} {
+	self.lock.Lock()
+	defer self.lock.Unlock()
+	
+	if (self.count == 0) {
+		return nil
+	}
+	index := rand.Intn(self.count-1)
 	return self.items[index]
 }
 

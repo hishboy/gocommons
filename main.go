@@ -30,6 +30,7 @@ package main
 
 import "fmt"
 import "github.com/hishboy/gocommons/lang"
+import "github.com/hishboy/gocommons/ml"
 
 func main() { 
 	fmt.Println("*** Queue ***")
@@ -64,6 +65,7 @@ func main() {
 	fmt.Println("\n")
 	fmt.Println("*** ArrayList ***")
 	array := lang.NewArrayList()
+	fmt.Println("random item in empty array:", array.Sample())
 	array.Add("hello")
 	array.Add("world")
 	array.Add("Hicham")
@@ -72,6 +74,8 @@ func main() {
 	fmt.Println("array[1]:", array.Get(1))
 	fmt.Println("array.indexOf(world):", array.IndexOf("world"))
 	fmt.Println("array.Contains(world):", array.Contains("world"), array.Contains("random"))
+	fmt.Println("random item in array:", array.Sample())
+	fmt.Println("random item in array:", array.Sample())
 	
 	for i := 0; i < array.Len(); i++ {
 		fmt.Println("item(", i, "):", array.Get(i))
@@ -105,5 +109,15 @@ func main() {
 	fmt.Println("total items in set:", set.Len(), set)
 	setToSlice := set.ToSlice()
 	fmt.Println("set.ToSlice:", setToSlice, len(setToSlice))
+	
+	fmt.Println("\n")
+	fmt.Println("*** KMeansSimpleCluster ***")
+	kMeansCluster := ml.NewKMeansSimpleCluster(2)
+	kMeansCluster.AddPointAsSlice([]float64{2, 3})
+	kMeansCluster.AddPointAsSlice([]float64{1, 1})
+	kMeansCluster.AddPointAsSlice([]float64{2, 2})
+	kMeansCluster.AddPointAsSlice([]float64{20, 20})
+	kMeansCluster.Cluster()
+	
 	
 }
