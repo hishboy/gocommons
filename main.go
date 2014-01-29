@@ -31,6 +31,7 @@ package main
 import "fmt"
 import "github.com/hishboy/gocommons/lang"
 import "github.com/hishboy/gocommons/ml"
+import "github.com/hishboy/gocommons/ml/support"
 
 func main() { 
 	fmt.Println("*** Queue ***")
@@ -216,10 +217,10 @@ func main() {
 	clusters := kMeansCluster.Cluster()
 	
 	for i := 0; i < clusters.Len(); i++ {
-		cluster := clusters.Get(i).(*ml.KMeansCluster)
+		cluster := clusters.Get(i).(*support.KMeansCluster)
 		fmt.Println("cluster:",cluster.Center().Items().ToSlice())
 		for j := 0; j < cluster.Points().Len(); j++ {
-			point := cluster.Points().Get(j).(*ml.KMeansPoint)
+			point := cluster.Points().Get(j).(*support.KMeansPoint)
 			fmt.Println("--", point.Items().ToSlice())
 		}
 	}

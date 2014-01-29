@@ -1,5 +1,5 @@
 //
-//  kmeans_point.go
+//  kmeans_cluster.go
 //
 //  Created by Hicham Bouabdallah
 //  Copyright (c) 2012 SimpleRocket LLC
@@ -26,40 +26,54 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-package ml
+package support
 
 import "github.com/hishboy/gocommons/lang"
-import "math"
-import "fmt"
 
-type KMeansPoint struct {
-	items *lang.ArrayList
+type KMeansCluster struct {
+	center *KMeansPoint
+	points *lang.ArrayList
 }
 
-func NewKMeansPoint(items []float64) *KMeansPoint {
-	self := &KMeansPoint{}
-	self.items = lang.NewArrayList()
-	for i :=0; i < len(items); i++ {
-		self.items.Add(items[i])
-	}
+func NewKMeansCluster(center *KMeansPoint) *KMeansCluster {
+	self := &KMeansCluster{}
+	self.center = center
+	self.points = lang.NewArrayList()
 	return self
 }
 
-func (self *KMeansPoint) Items() *lang.ArrayList {
-	return self.items
+func (self *KMeansCluster) Points() *lang.ArrayList {
+	return self.points
 }
 
-func (self *KMeansPoint) DistanceFromPoint(otherPoint *KMeansPoint) float64 {
-	if (self.items.Len() != otherPoint.items.Len()) {
-		panic(fmt.Sprintf("itemA (%d) length doesn't match itemB (%d) length", self.items.Len(), otherPoint.items.Len()))
+func (self *KMeansCluster) Center() *KMeansPoint {
+	return self.center
+}
+
+func (self *KMeansCluster) Recenter() float64 {
+	totalPoint := self.points.Len()
+	firstPoint := self.points.Get(0).(*KMeansPoint)
+	totalCoordinates := firstPoint.items.Len()
+	
+	// sum up the points
+	totals := make([]float64, totalCoordinates)
+	for i := 0; i < totalPoint; i++ {
+		point := self.points.Get(i).(*KMeansPoint)
+		for j := 0; j < totalCoordinates; j++ {
+			totals[j] = totals[j] + point.items.Get(j).(float64)
+		}
 	}
 	
-	total := 0.0 
-	for i := 0; i < self.items.Len(); i++ {
-		thisCoordinate := self.items.Get(i).(float64)
-		otherCoordinate := otherPoint.items.Get(i).(float64)
-		total = total + math.Pow(thisCoordinate-otherCoordinate, 2)
+	// average out
+	averages := make([]float64, totalCoordinates)
+	for i := 0; i < totalCoordinates; i++ {
+		averages[i] = totals[i] / float64(totalPoint)
 	}
 	
-	return math.Sqrt(total)
+	// calculate the distance between old and new center
+	newCenter := NewKMeansPoint(averages)
+	distance := self.center.DistanceFromPoint(newCenter)
+	self.center = newCenter
+	
+	return distance
 }
