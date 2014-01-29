@@ -60,7 +60,9 @@ func (self *KMeansSimpleCluster) AddPointAsSlice(items []float64) {
 }
 
 func (self *KMeansSimpleCluster) Cluster() *lang.ArrayList {
-	// FIXME: hicham - don't allow single cluster
+	if (self.numberOfClusters == 1) {
+		panic("please specify more than one cluster")
+	}
 	
 	clusters := lang.NewArrayList()
 	uniqueCenters := lang.NewHashSet()

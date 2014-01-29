@@ -50,9 +50,8 @@ func (self *Point) Items() *lang.ArrayList {
 }
 
 func (self *Point) DistanceFromPoint(otherPoint *Point) float64 {
-	// FIXME: hicham - should return error if array size doesn't match
 	if (self.items.Len() != otherPoint.items.Len()) {
-		panic(fmt.Sprintf("item ", self.items.ToSlice(), " doesn't match ", otherPoint.items.ToSlice(), " size"))
+		panic(fmt.Sprintf("itemA (%d) length doesn't match itemB (%d) length", self.items.Len(), otherPoint.items.Len()))
 	}
 	
 	total := 0.0 
