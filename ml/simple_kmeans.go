@@ -1,5 +1,5 @@
 //
-//  kmeans_simple_cluster.go
+//  simple_kmeans.go
 //
 //  Created by Hicham Bouabdallah
 //  Copyright (c) 2012 SimpleRocket LLC
@@ -31,15 +31,15 @@ package ml
 import "github.com/hishboy/gocommons/lang"
 import "math"
 
-type KMeansSimpleCluster struct {
+type SimpleKMeans struct {
 	points *lang.ArrayList
 	numberOfClusters int
 	delta float64
 }
 
 
-func NewKMeansSimpleCluster(numberOfClusters int) *KMeansSimpleCluster {
-	self := &KMeansSimpleCluster{}
+func NewSimpleKMeans(numberOfClusters int) *SimpleKMeans {
+	self := &SimpleKMeans{}
 	self.points = lang.NewArrayList()
 	self.numberOfClusters = numberOfClusters
 	self.delta = 0.001 // default delta
@@ -47,19 +47,19 @@ func NewKMeansSimpleCluster(numberOfClusters int) *KMeansSimpleCluster {
 }
 
 
-func (self *KMeansSimpleCluster) SetDelta(delta float64) {
+func (self *SimpleKMeans) SetDelta(delta float64) {
 	self.delta = delta
 }
 
-func (self *KMeansSimpleCluster) AddPoint(point *Point) {
+func (self *SimpleKMeans) AddPoint(point *KMeansPoint) {
 	self.points.Add(point)
 }
 
-func (self *KMeansSimpleCluster) AddPointAsSlice(items []float64) {
-	self.points.Add(NewPoint(items))
+func (self *SimpleKMeans) AddPointAsSlice(items []float64) {
+	self.points.Add(NewKMeansPoint(items))
 }
 
-func (self *KMeansSimpleCluster) Cluster() *lang.ArrayList {
+func (self *SimpleKMeans) Cluster() *lang.ArrayList {
 	if (self.numberOfClusters == 1) {
 		panic("please specify more than one cluster")
 	}
@@ -67,12 +67,12 @@ func (self *KMeansSimpleCluster) Cluster() *lang.ArrayList {
 	clusters := lang.NewArrayList()
 	uniqueCenters := lang.NewHashSet()
 	for i := 0; i < self.numberOfClusters; i++ {
-		randomCenter := self.points.Sample().(*Point)
+		randomCenter := self.points.Sample().(*KMeansPoint)
 		for uniqueCenters.Contains(randomCenter) {
-			randomCenter = self.points.Sample().(*Point)
+			randomCenter = self.points.Sample().(*KMeansPoint)
 		}
 		uniqueCenters.Add(randomCenter)
-		cluster := NewCluster(randomCenter)
+		cluster := NewKMeansCluster(randomCenter)
 		clusters.Add(cluster)
 	}
 	
@@ -81,11 +81,11 @@ func (self *KMeansSimpleCluster) Cluster() *lang.ArrayList {
 		// find nearest cluster and assign point to cluster
 		for i := 0; i < self.points.Len(); i++ {
 			smallestDistance := math.MaxFloat64
-			var nearestCluster *Cluster
+			var nearestCluster *KMeansCluster
 			
-			point := self.points.Get(i).(*Point)
+			point := self.points.Get(i).(*KMeansPoint)
 			for j := 0; j < clusters.Len(); j++ {
-				cluster := clusters.Get(j).(*Cluster)
+				cluster := clusters.Get(j).(*KMeansCluster)
 				distanceBetweenCenterAndPoint := point.DistanceFromPoint(cluster.center)
 				if  distanceBetweenCenterAndPoint < smallestDistance {
 					smallestDistance = distanceBetweenCenterAndPoint
@@ -99,7 +99,7 @@ func (self *KMeansSimpleCluster) Cluster() *lang.ArrayList {
 		biggestDeltaDistance := -math.MaxFloat64
 		newDeltaDistance := self.delta
 		for i := 0; i < clusters.Len(); i++ {
-			cluster := clusters.Get(i).(*Cluster)						
+			cluster := clusters.Get(i).(*KMeansCluster)						
 			newDeltaDistance = cluster.Recenter()
 			if newDeltaDistance > biggestDeltaDistance {
 				biggestDeltaDistance = newDeltaDistance
@@ -112,7 +112,7 @@ func (self *KMeansSimpleCluster) Cluster() *lang.ArrayList {
 		} else {
 			// otherwise clear cluster and try again
 			for i := 0; i < clusters.Len(); i++ {
-				cluster := clusters.Get(i).(*Cluster)
+				cluster := clusters.Get(i).(*KMeansCluster)
 				cluster.points.Clear()
 			}
 		}

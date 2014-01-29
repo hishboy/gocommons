@@ -1,5 +1,5 @@
 //
-//  kmeans_simple_cluster.go
+//  kmeans_cluster.go
 //
 //  Created by Hicham Bouabdallah
 //  Copyright (c) 2012 SimpleRocket LLC
@@ -30,35 +30,35 @@ package ml
 
 import "github.com/hishboy/gocommons/lang"
 
-type Cluster struct {
-	center *Point
+type KMeansCluster struct {
+	center *KMeansPoint
 	points *lang.ArrayList
 }
 
-func NewCluster(center *Point) *Cluster {
-	self := &Cluster{}
+func NewKMeansCluster(center *KMeansPoint) *KMeansCluster {
+	self := &KMeansCluster{}
 	self.center = center
 	self.points = lang.NewArrayList()
 	return self
 }
 
-func (self *Cluster) Points() *lang.ArrayList {
+func (self *KMeansCluster) Points() *lang.ArrayList {
 	return self.points
 }
 
-func (self *Cluster) Center() *Point {
+func (self *KMeansCluster) Center() *KMeansPoint {
 	return self.center
 }
 
-func (self *Cluster) Recenter() float64 {
+func (self *KMeansCluster) Recenter() float64 {
 	totalPoint := self.points.Len()
-	firstPoint := self.points.Get(0).(*Point)
+	firstPoint := self.points.Get(0).(*KMeansPoint)
 	totalCoordinates := firstPoint.items.Len()
 	
 	// sum up the points
 	totals := make([]float64, totalCoordinates)
 	for i := 0; i < totalPoint; i++ {
-		point := self.points.Get(i).(*Point)
+		point := self.points.Get(i).(*KMeansPoint)
 		for j := 0; j < totalCoordinates; j++ {
 			totals[j] = totals[j] + point.items.Get(j).(float64)
 		}
@@ -71,7 +71,7 @@ func (self *Cluster) Recenter() float64 {
 	}
 	
 	// calculate the distance between old and new center
-	newCenter := NewPoint(averages)
+	newCenter := NewKMeansPoint(averages)
 	distance := self.center.DistanceFromPoint(newCenter)
 	self.center = newCenter
 	

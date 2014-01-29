@@ -1,5 +1,5 @@
 //
-//  point.go
+//  kmeans_point.go
 //
 //  Created by Hicham Bouabdallah
 //  Copyright (c) 2012 SimpleRocket LLC
@@ -32,12 +32,12 @@ import "github.com/hishboy/gocommons/lang"
 import "math"
 import "fmt"
 
-type Point struct {
+type KMeansPoint struct {
 	items *lang.ArrayList
 }
 
-func NewPoint(items []float64) *Point {
-	self := &Point{}
+func NewKMeansPoint(items []float64) *KMeansPoint {
+	self := &KMeansPoint{}
 	self.items = lang.NewArrayList()
 	for i :=0; i < len(items); i++ {
 		self.items.Add(items[i])
@@ -45,11 +45,11 @@ func NewPoint(items []float64) *Point {
 	return self
 }
 
-func (self *Point) Items() *lang.ArrayList {
+func (self *KMeansPoint) Items() *lang.ArrayList {
 	return self.items
 }
 
-func (self *Point) DistanceFromPoint(otherPoint *Point) float64 {
+func (self *KMeansPoint) DistanceFromPoint(otherPoint *KMeansPoint) float64 {
 	if (self.items.Len() != otherPoint.items.Len()) {
 		panic(fmt.Sprintf("itemA (%d) length doesn't match itemB (%d) length", self.items.Len(), otherPoint.items.Len()))
 	}
