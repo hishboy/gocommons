@@ -117,7 +117,17 @@ func main() {
 	kMeansCluster.AddPointAsSlice([]float64{1, 1})
 	kMeansCluster.AddPointAsSlice([]float64{2, 2})
 	kMeansCluster.AddPointAsSlice([]float64{20, 20})
-	kMeansCluster.Cluster()
+	kMeansCluster.AddPointAsSlice([]float64{40, 33})
+	clusters := kMeansCluster.Cluster()
+	
+	for i := 0; i < clusters.Len(); i++ {
+		cluster := clusters.Get(i).(*ml.Cluster)
+		fmt.Println("cluster:",cluster.Center().Items().ToSlice())
+		for j := 0; j < cluster.Points().Len(); j++ {
+			point := cluster.Points().Get(j).(*ml.Point)
+			fmt.Println("--", point.Items().ToSlice())
+		}
+	}
 	
 	
 }
