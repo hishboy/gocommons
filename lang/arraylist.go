@@ -115,7 +115,7 @@ func (self *ArrayList) Sample() interface{} {
 	if (self.count == 0) {
 		return nil
 	}
-	index := rand.Intn(self.count-1)
+	index := rand.Intn(self.count)
 	return self.items[index]
 }
 
