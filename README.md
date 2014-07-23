@@ -3,6 +3,12 @@ gocommons
 
 Common Go lang data structures, utilities, ML algorithms etc
 
+Installation
+------------
+With Go and git installed:
+
+    go get github.com/hishboy/gocommons
+    
 Data Structures
 ===============
 1. ArrayList
