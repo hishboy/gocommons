@@ -10,14 +10,14 @@ With Go and git installed:
     go get github.com/hishboy/gocommons
     
 Data Structures
-===============
+------------
 1. ArrayList
 2. HashSet
 3. Queue
 4. Stack
 
 Machine Learning Algorithms
-===========================
+------------
 1. KMeansSimpleCluster: simple in-memory k-means clustering implementation
 
 *Cannot find a data structure? Ping me and I'll add it as soon as I humanely can.*
