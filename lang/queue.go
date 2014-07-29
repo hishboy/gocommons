@@ -35,7 +35,7 @@ type queuenode struct {
 	next *queuenode
 }
 
-//	FIFO (first in first out) data stucture.
+//	A go-routine safe FIFO (first in first out) data stucture.
 type Queue struct {
 	head  *queuenode
 	tail  *queuenode
@@ -51,6 +51,7 @@ func NewQueue() *Queue {
 }
 
 //	Returns the number of elements in the queue (i.e. size/length)
+//	go-routine safe.
 func (q *Queue) Len() int {
 	q.lock.Lock()
 	defer q.lock.Unlock()
@@ -59,6 +60,7 @@ func (q *Queue) Len() int {
 
 //	Pushes/inserts a value at the end/tail of the queue.
 //	Note: this function does mutate the queue.
+//	go-routine safe.
 func (q *Queue) Push(item interface{}) {
 	q.lock.Lock()
 	defer q.lock.Unlock()
@@ -78,6 +80,7 @@ func (q *Queue) Push(item interface{}) {
 //	Returns the value at the front of the queue.
 //	i.e. the oldest value in the queue.
 //	Note: this function does mutate the queue.
+//	go-routine safe.
 func (q *Queue) Poll() interface{} {
 	q.lock.Lock()
 	defer q.lock.Unlock()
@@ -100,6 +103,7 @@ func (q *Queue) Poll() interface{} {
 //	Returns a read value at the front of the queue.
 //	i.e. the oldest value in the queue.
 //	Note: this function does NOT mutate the queue.
+//	go-routine safe.
 func (q *Queue) Peek() interface{} {
 	q.lock.Lock()
 	defer q.lock.Unlock()
