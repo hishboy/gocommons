@@ -5,6 +5,7 @@ import (
 	//logLib "log"
 	//"os"
 	"testing"
+	"time"
 	//"reflect"
 
 	gc "gopkg.in/check.v1" //gocheck testing framework
@@ -173,4 +174,36 @@ func (s *Suite) TestReadStuf(c *gc.C) {
 	val := q.Peek()
 	c.Assert(val, gc.Equals, expected)
 	c.Assert(q.Len(), gc.Equals, 1)
+}
+
+//--Concurrent tests
+
+func (s *Suite) TestConcurrent(c *gc.C) {
+	q := NewQueue()
+	sleepTime := 100
+	numberGoRoutines := 50
+	numberOfPushes := 10000
+	ch := make(chan int, numberGoRoutines)
+	for i := 0; i < numberGoRoutines; i++ {
+		go inceremtQueue(q, ch, numberOfPushes)
+	}
+	Wait(sleepTime)
+	for {
+		if len(ch) == numberGoRoutines {
+			c.Assert(len(ch), gc.Equals, numberGoRoutines)
+			c.Assert(q.Len(), gc.Equals, numberGoRoutines*numberOfPushes)
+			return
+		}
+	}
+}
+
+func inceremtQueue(q *Queue, ch chan<- int, numberOfPushes int) {
+	for j := 0; j < numberOfPushes; j++ {
+		q.Push(j)
+	}
+	ch <- 1
+}
+
+func Wait(duration int) {
+	time.Sleep(time.Duration(duration) * time.Millisecond)
 }
