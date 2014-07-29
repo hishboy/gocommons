@@ -22,7 +22,7 @@ var _ = gc.Suite(&Suite{})
 
 //Test for correct inputs
 
-func (s *Suite) TestPulltLengthZero(c *gc.C) {
+func (s *Suite) TestLengthZero(c *gc.C) {
 	q := NewQueue()
 	c.Assert(q.Len(), gc.Equals, 0)
 }
