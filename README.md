@@ -15,6 +15,7 @@ Data Structures
 2. HashSet
 3. Queue
 4. Stack
+5. LRUCache - Least Recently Used Cache
 
 Machine Learning Algorithms
 ------------
