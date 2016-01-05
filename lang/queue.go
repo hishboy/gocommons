@@ -109,7 +109,7 @@ func (q *Queue) Peek() interface{} {
 	defer q.lock.Unlock()
 
 	n := q.head
-	if n == nil || n.data == nil {
+	if n == nil {
 		return nil
 	}
 
